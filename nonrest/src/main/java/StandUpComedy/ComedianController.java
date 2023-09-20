@@ -48,7 +48,7 @@ class ComedianController {
 		try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
 			//HTTP GET method
-			HttpGet httpget = new HttpGet("http://localhost:5262/api/jokes/1");
+			HttpGet httpget = new HttpGet("http://localhost:5555/api/jokes/1");
 			System.out.println("Executing request " + httpget.getRequestLine());
 
 			// Create a custom response handler

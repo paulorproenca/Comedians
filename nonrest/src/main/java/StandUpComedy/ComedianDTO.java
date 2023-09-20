@@ -54,7 +54,7 @@ class ComedianDTO {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
             //HTTP GET method
-            HttpGet httpget = new HttpGet("http://localhost:5262/api/jokes/" + jokeid);
+            HttpGet httpget = new HttpGet("http://localhost:5555/api/jokes/" + jokeid);
             System.out.println("Executing request " + httpget.getRequestLine());
 
             // Create a custom response handler
