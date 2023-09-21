@@ -1,12 +1,11 @@
-package StandUpComedy;
+package StandUpComedy.Repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import StandUpComedy.Comedian;
-import StandUpComedy.ComedianRepository;
+import StandUpComedy.Model.Comedian;
 
 @Configuration
 class LoadDatabase {

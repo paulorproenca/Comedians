@@ -1,5 +1,6 @@
-package StandUpComedy;
+package StandUpComedy.Model;
 
+import StandUpComedy.Model.Category;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -1,21 +1,9 @@
-package StandUpComedy;
+package StandUpComedy.Model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpEntity;
-
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import java.io.IOException;
-
-class ComedianDTO {
+public class ComedianDTO {
 
     private Long id;
     private String name;
@@ -23,14 +11,14 @@ class ComedianDTO {
 
     private List<Joke> theJokes;
 
-    ComedianDTO(Long id,String name, String email, int[] jokes) {
+
+   // private RestService theService;
+
+    public ComedianDTO(Long id, String name, String email, List<Joke> jokes) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.theJokes = new ArrayList<Joke>();
-        for(int x=0;x<jokes.length;x++){
-            setTheJoke(jokes[x]);
-        }
+        this.theJokes = jokes;
     }
 
     public Long getId() {
@@ -49,6 +37,7 @@ class ComedianDTO {
         return theJokes;
     }
 
+    /*
     public void setTheJoke(int jokeid) {
 
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
@@ -76,6 +65,8 @@ class ComedianDTO {
         }
 
     }
+    */
+
 
     public void setId(Long id) {
         this.id = id;

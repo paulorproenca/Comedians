@@ -1,4 +1,4 @@
-package StandUpComedy;
+package StandUpComedy.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

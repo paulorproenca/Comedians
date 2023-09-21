@@ -1,4 +1,4 @@
-package StandUpComedy;
+package StandUpComedy.Application;
 
 class ComedianNotFoundException extends RuntimeException {
 

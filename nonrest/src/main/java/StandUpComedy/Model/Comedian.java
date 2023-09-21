@@ -1,4 +1,4 @@
-package StandUpComedy;
+package StandUpComedy.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,13 +6,14 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
+public
 class Comedian {
 	private @Id @GeneratedValue Long id;
 	private String name;
 	private String email;
 	private int[] jokes;
 
-	protected Comedian() {}
+	public Comedian() {}
 	public Comedian(String name, String email, int[] jokes) {
 		this.name = name;
 		this.email = email;

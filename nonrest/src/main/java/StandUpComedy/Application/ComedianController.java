@@ -1,5 +1,12 @@
-package StandUpComedy;
+package StandUpComedy.Application;
 
+import StandUpComedy.Model.ComedianDTO;
+import StandUpComedy.Application.ComedianNotFoundException;
+import StandUpComedy.Repository.ComedianRepository;
+import StandUpComedy.Model.Comedian;
+import StandUpComedy.Model.Joke;
+
+import StandUpComedy.Service.RestService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -8,16 +15,20 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 class ComedianController {
 
+	private RestService theService;
 	private final ComedianRepository repository;
 
-	ComedianController(ComedianRepository repository) {
+	ComedianController(ComedianRepository repository, RestService theService) {
+		this.theService = theService;
 		this.repository = repository;
 	}
 
@@ -34,50 +45,26 @@ class ComedianController {
 		return repository.save(nc);
 	}
 
-	// Single item
-
-//	@GetMapping("/comedians/{id}")
-//	Comedian one(@PathVariable Long id) {
-//		return repository.findById(id)
-//				.orElseThrow(() -> new ComedianNotFoundException(id));
-//	}
-
-	@GetMapping("/comedians/{id}/Joke")
+	@GetMapping("/comedians/{id}/firstjoke")
 	Joke firstjoke(@PathVariable Long id) {
 
-		try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-
-			//HTTP GET method
-			HttpGet httpget = new HttpGet("http://localhost:5555/api/jokes/1");
-			System.out.println("Executing request " + httpget.getRequestLine());
-
-			// Create a custom response handler
-			ResponseHandler < String > responseHandler = response -> {
-				int status = response.getStatusLine().getStatusCode();
-				if (status >= 200 && status < 300) {
-					HttpEntity entity = response.getEntity();
-					return entity != null ? EntityUtils.toString(entity) : null;
-				} else {
-					throw new ClientProtocolException("Unexpected response status: " + status);
-				}
-			};
-			String responseBody = httpclient.execute(httpget, responseHandler);
-			System.out.println("----------------------------------------");
-			System.out.println(responseBody);
-			System.out.println("----------------------------------------");
-			Joke joke = new ObjectMapper().readValue(responseBody, Joke.class);
-			return(joke);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		Comedian theComedian = repository.findById(id)
+				.orElseThrow(() -> new ComedianNotFoundException(id));
+		return theService.getTheJoke(theComedian.getJokes()[0]);
 	}
 
 	@GetMapping("/comedians/{id}")
 	ComedianDTO one(@PathVariable Long id) {
 
+		List<Joke> theJokes = new ArrayList<Joke>();
+
 		Comedian theComedian = repository.findById(id)
 				.orElseThrow(() -> new ComedianNotFoundException(id));
-		return new ComedianDTO(theComedian.getId(), theComedian.getName(), theComedian.getEmail(), theComedian.getJokes());
+		for(int jokeId : theComedian.getJokes()){
+			theJokes.add(theService.getTheJoke(jokeId));
+		}
+
+		return new ComedianDTO(theComedian.getId(), theComedian.getName(), theComedian.getEmail(), theJokes);
 	}
 
 	@PutMapping("/comedians/{id}")
