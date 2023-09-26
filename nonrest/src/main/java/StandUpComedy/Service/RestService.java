@@ -17,7 +17,8 @@ import java.io.IOException;
 @Service
 public class RestService {
 
-    private String JokeServiceURL = "http://localhost:5555/api/jokes/";
+    //private String JokeServiceURL = "http://localhost:5555/api/jokes/";
+    private String JokeServiceURL = "http://172.17.0.1:5555/api/jokes/";
 
     public Joke getTheJoke(int jokeId) {
 
